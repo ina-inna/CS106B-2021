@@ -1,0 +1,122 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Fundamentals Warmup
+------
+Q1. Looking at a call stack listing in a debugger, what is the indication that the program being debugged uses recursion?
+A1. There is a stack of called functions that are in progress, i.e. not executed yet when recursion is used. Whereas with loops one stack is executed at a time.
+
+Q2. Subtract the innermost level number from the outermost to get the maximum count of stack frames that fit in the capacity of the call stack. How many stack frames fit in your system's call stack?
+A2. 16229 is max capacity, although there is a "more" sign after 2033rd stack but it's unclick
+
+Q3. Describe how the symptoms of infinite recursion differ from the symptoms of an infinite loop.
+A3. In case of an infinite loop, program does not know that it's infinite, so it attempts to execute the loop and you get stuck in a "waiting mode". Infinite recursion terminates the program abruptly as it causes a stack overflow.
+
+Q4. What is the pattern to which values of base number and exponent result in a test failure?
+A4. If the base is negative, the result will always be negative, so if the exponent is an odd number, they pass the test, but even exponents don't.
+
+Q5. Of the existing five cases, are there any that seem redundant and can be removed from the function? Which do you think are absolutely necessary? Are there any cases that you're unsure about?
+A5. Before diving deeper, my first impression that the case dealing with a negative base can be removed. I've also noticed that there is a minus sign so the result will always be negative which is not always true for cases with negative bases (e.g. if exp is an even number, the result will be positive), so this must be a bug.
+
+Balanced Operators
+------
+Q6. Compare your recursive solution to the iterative approach used for the Check Balance problem in Section 1. Which version do you find easier to read and understand? In which version did you find it easier to confirm the correct behavior?
+A6. I find recursive function more elegant, but iterative approach is easier to read. Recursive approach was easier to confirm the exact behaviour as it does not involve using any additional ADTs and is quite self-explanatory.
+
+Merge Sorted Sequences
+------
+Q7. Give a rough estimate of the maximum length sequence that could be successfully merged on your system assuming a recursive implementation of binaryMerge.
+A7. If the length of both queues is roughly 8k each.
+
+Q8. What would be the observed behavior if attempting to recursively merge a sequence larger than that maximum?
+A8. The program will crash as there will be a stack overflow.
+
+Q9. Include the data from your execution timing and explain how it supports your Big O prediction for binaryMerge.
+A9. I predicted Big O of n for binary merge, and after running tests on various sample sizes it in fact confirms the linear growth of timing.
+
+Q10. Include the data from your execution timing and explain how it supports your Big O prediction for naiveMultiMerge.
+A10. I predicted O(n^2) = O(n^k) and after several tests where a) n is fixed, k is growing & b) k is fixed, n is growing, we can see that timing is growing qudratically.
+
+[SimpleTest] starting (STUDENT_TEST, line 220) Time naiveMultiMerge operation...  =  Correct
+    Line 226 TIME_OPERATION naiveMultiMerge(all) (size =     1000) completed in    0.015 secs
+    Line 226 TIME_OPERATION naiveMultiMerge(all) (size =    10000) completed in    0.115 secs
+    Line 226 TIME_OPERATION naiveMultiMerge(all) (size =   100000) completed in    1.159 secs
+    Line 226 TIME_OPERATION naiveMultiMerge(all) (size =  1000000) completed in   11.536 secs
+    Line 226 TIME_OPERATION naiveMultiMerge(all) (size = 10000000) completed in  158.313 secs
+[SimpleTest] starting (STUDENT_TEST, line 232) Time naiveMultiMerge operation...  =  Correct
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    0.129 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    1.333 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    2.501 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    3.690 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    4.583 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    5.674 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    6.652 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    7.786 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in    8.806 secs
+    Line 238 TIME_OPERATION naiveMultiMerge(all) (size =    11000) completed in   17.146 secs
+
+
+Q11. Include the data from your execution timing and explain how it demonstrates O(n log k) runtime for recMultiMerge.
+Timing are growing at a much slower rate than in the naiveSort.
+A11. [SimpleTest] starting (STUDENT_TEST, line 256) Time recMultiMerge operation.....  =  Correct
+Line 262 TIME_OPERATION recMultiMerge(all) (size =      100) completed in    0.003 secs
+Line 262 TIME_OPERATION recMultiMerge(all) (size =     1000) completed in    0.006 secs
+Line 262 TIME_OPERATION recMultiMerge(all) (size =    10000) completed in    0.031 secs
+Line 262 TIME_OPERATION recMultiMerge(all) (size =   100000) completed in    0.252 secs
+Line 262 TIME_OPERATION recMultiMerge(all) (size =  1000000) completed in    2.345 secs
+Line 262 TIME_OPERATION recMultiMerge(all) (size = 10000000) completed in   22.972 secs
+
+Q12. You run recMultiMerge on a sequence of size 1 million and see that it completes just fine. Explain why this is not running afoul of the call stack capacity limitation. Hint: How many stack frames (levels) are expected to be on the call stack at the deepest point in the recursion in recMultiMerge?
+A12. Because it's log N, so it takes just 6 stacks to compute everything.
+
+Q13. A search engine can't read your mind (although some use personalization to try). If you search a term like "rice" that has many meanings, most search engines will show a few different guesses as to what you might be looking for among the top results: Rice University, what is rice, local restaurants that serve rice, how to cook rice, Rice University Athletics, nutrition of rice, and so on. Search engines often create ordered lists of the most "relevant" results for a certain query. Imagine that a search engine maintains an "ordered list of relevant results for Rice University" and an "ordered list of relevant results for how to cook rice." When the search term is ambiguous, like "rice," the engine shuffles the lists together.
+
+- How could you use your multi-merge algorithm to achieve a result like the search results you saw? Write a couple lines of pseudocode.
+- How would you decide when to shuffle together different meanings of a term and when to show only one? Please provide at least two specific scenarios as examples to explain your reasoning.
+A13.
+
+- parse search query
+- identify how many associations with different search lists it has
+- merge results sorting my highest value
+
+If there is a prior history of searching for this term and the user clicked on the resources already, then it makes sense to show the result of just one search list.
+If it's a brand new search, then merging is fine.
+
+Q14. Sometimes search engines choose not to merge results and only show only one meaning or interpretation of a searched term. This often happens within a particular country or geographical area. For example, Katherine Ye & Rodrigo Ochigame show that searching the same term in different countries can deliver entirely different results, such as this search for the word "God." For more examples, see their Search Atlas.
+
+- What does geographical sorting of search results assume about the people who live in each country? At minimum, explain your reasoning in 2-3 sentences.
+A14.It assumes that the user might have the same interests as the average user in their country, so it takes cultural assumptions about the country into account. Which is on one hand is a strong bias, on the other side not conforming with the cultural backgroun may product irrelevant results.
+
+Q15. One concern raised with search engines is that they might show different results to different people based on location, language, and especially search history, isolating them from information that might help them understand more about the diverse world in which they live. You may have heard this phenomenon referred to as the creation of “filter bubbles” when the effects of this personalization are negative.
+
+- When would it be beneficial to show personalized search results? Provide a specific example of when you think it would be beneficial, and explain your reasoning.
+If we take shopping as a category example, it might be beneficial to rely upon user's history and user's preferences. From the user's perspective, it makes sense to get tailored results based on their style, history etc.
+- Why might showing personalized results to only particular groups of people be an issue? Provide a specific example of when you think it would be harmful, and explain your reasoning.
+A15.
+One of the issues with the pesonalized search results are bias, filter bubbles, privacy concerns. If we are taking into consideration newsfeed and user's interest, we might end up showing the user the news that are tailored to their views, e.g. conservative. This creates a confirmation bias that your political view is the only correct view and other people don't think differently or don't have the right to think differently.
+
+Backtracking Warmup
+------
+Q16. What is the value of totalMoves after stepping over the call to moveTower in hanoiAnimation?
+A16. 15 moves
+
+Q17. What is the value of the totalMoves variable after stepping over the first recursive sub-call? (In other words, within moveTower just after stepping over the first recursive sub-call to moveTower inside the else statement.)
+A17. 3 moves
+
+Q18. After breaking at the base case of moveTower and then choosing Step Out, where do you end up? (What function are you in, and at what line number?) What is the value of the totalMoves variable at this point?
+A18. Line 67, first recursive function after else MoveTower, 1 move
+
+Q19. What is the smallest possible input that you used to trigger the bug in the program?
+A19. nums = {3, -3};
+
+Q20. Identify the one-character error in the code and explain why that one-character bug causes the function to return the output you see when running on the minimal input you listed above. You should be able to specifically account for how the error causes the result to change from “completely correct” to “terribly wrong.”
+A20. the error is in the correct ouput of the sum; in the example with {3; -3}, if we write down the ouput sum as sum+=element, then it will produce give 0 ouput falsely twice 
+
+
+Voting (Please note that this part of A3 is completely optional and will only be considered for extra credit. If you did not submit code for this part of the assignment, Q19 and Q20 will not be considered.)
+------
+Q21. What is the Big O of computePowerIndex? Include your timing data and explain how it supports your reasoning.
+Q19: Based on the timing data I assume it is O(2^n)
+
+Q22. Use the Big O and timing data to estimate how long it would take to compute the power index for the 51 voting blocks in the U.S. Electoral College.
+A22. TODO
